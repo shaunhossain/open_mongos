@@ -31,4 +31,11 @@ class MongoDatabase {
       return e.toString();
     }
   }
+
+  static Future<void> update({required UserModel data}) async {
+    log("check ->${data.firstName}");
+    var result = await userCollection.findOne({"_id": data.id});
+    var response = await userCollection.legacyUpdate(where.eq("_id", data.id),modify.set('firstName', data.firstName));
+    inspect(response);
+  }
 }
